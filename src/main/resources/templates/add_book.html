@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert Book</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container">
+  <form action="#" th:action="@{/addbook}" th:object="${bookDto}" method="post">
+    	<p>Title: <input type="text" th:field="*{title}" /></p>
+    	<p th:each="error: ${#fields.errors('title')}" th:text="${error}">Validation error</p>
+        <p>Author: <input type="text" th:field="*{author}" /></p>
+        <p th:each="error: ${#fields.errors('author')}" th:text="${error}">Validation error</p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</div>
+</body>
+</html>

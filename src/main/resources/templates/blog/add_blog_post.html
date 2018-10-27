@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="../../../resources/css/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+	<script src="js/blog.js"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	
+	<div class="container">
+      <div class="py-5 text-center">
+        <h2>Create New Blog Post</h2>
+        <p class="lead">Input the correct information and submit.</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 order-md-1">
+          <form class="needs-validation" novalidate action="#" th:action="@{/registerUser}" th:object="${blogDto}" method="POST" enctype="utf8">
+          	
+              <div class="mb-3">
+                <label for="title">Post Title</label>
+                <input type="text" class="form-control" id="title" placeholder="" value="" th:field="*{title}" required>
+                <small th:each="error: ${#fields.errors('title')}" th:text="${title}">Valid first name is required.</small>
+              </div>
+              <div class="mb-3">
+                <label for="content">Content</label>
+                <textarea id="content" class="form-control" th:field="*{content}" rows="10"></textarea>
+                <small th:each="error : ${#fields.errors('content')}" th:text="${error}">Valid last name is required.</small>
+              </div>
+              <div class="mb-3">
+                <label for="path">Image</label>
+                <input type="file" class="form-control-file" id="path" placeholder="" value=""  th:field="*{path}"  required>
+                <small th:each="error : ${#fields.errors('path')}" th:text="${error}">Valid last name is required.</small>
+              </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+      
+      <div th:replace="fragments/footer :: footer"></div>
+    </div>
+</body>
+</html>
