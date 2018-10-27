@@ -20,11 +20,11 @@
 
       <div class="row">
         <div class="col-md-8 order-md-1">
-          <form class="needs-validation" novalidate action="#" th:action="@{/registerUser}" th:object="${blogDto}" method="POST" enctype="utf8">
+          <form class="needs-validation" novalidate action="#" th:action="@{/add_blog_post}" th:object="${blogDto}" method="POST" enctype="multipart/form-data">
           	
               <div class="mb-3">
                 <label for="title">Post Title</label>
-                <input type="text" class="form-control" id="title" placeholder="" value="" th:field="*{title}" required>
+                <input type="text" class="form-control" id="title" placeholder="" value="" th:field="*{title}">
                 <small th:each="error: ${#fields.errors('title')}" th:text="${title}">Valid first name is required.</small>
               </div>
               <div class="mb-3">
@@ -33,9 +33,9 @@
                 <small th:each="error : ${#fields.errors('content')}" th:text="${error}">Valid last name is required.</small>
               </div>
               <div class="mb-3">
-                <label for="path">Image</label>
-                <input type="file" class="form-control-file" id="path" placeholder="" value=""  th:field="*{path}"  required>
-                <small th:each="error : ${#fields.errors('path')}" th:text="${error}">Valid last name is required.</small>
+                <label for="image">Image</label>
+                <input type="file" class="form-control-file" id="image" placeholder="" value=""  th:field="*{image}">
+                <small th:each="error : ${#fields.errors('image')}" th:text="${error}">Valid last name is required.</small>
               </div>
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>

@@ -3,6 +3,8 @@ package com.hhub.model.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.hhub.model.User;
 
 public class BlogDto {
@@ -16,12 +18,8 @@ public class BlogDto {
 	private String content;
 	
 	@NotNull
-    @NotEmpty
-	private String path;
+	private MultipartFile  image;
 	
-	@NotNull
-    @NotEmpty
-	private User editor;
 
 	public void setTitle(String title) {
 		
@@ -46,25 +44,13 @@ public class BlogDto {
 		return content;
 		
 	}
-	
-	public String getPath() {
-		return path;
+
+	public MultipartFile getImage() {
+		return image;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	public void setEditor(User editor) {
-		
-		this.editor = editor;
-		
-	}
-
-	public User getEditor() {
-
-		return editor;
-		
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 
 }

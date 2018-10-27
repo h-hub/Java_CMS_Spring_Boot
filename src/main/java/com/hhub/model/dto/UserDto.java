@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import com.hhub.model.validators.PasswordMatches;
 import com.hhub.model.validators.ValidEmail;
 
-@PasswordMatches
+
 public class UserDto {
 	
     @NotNull
