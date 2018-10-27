@@ -1,4 +1,4 @@
-# spring-boot-crud-mvc
+# spring boot cms
 Spring boot crud cms MVC application
 
 Maven install and execute the jar.
