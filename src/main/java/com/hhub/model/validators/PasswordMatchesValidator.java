@@ -1,4 +1,4 @@
-package com.hhub.model.validators;
+ package com.hhub.model.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

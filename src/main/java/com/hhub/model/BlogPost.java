@@ -1,5 +1,7 @@
 package com.hhub.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+
+import com.hhub.util.BlogStatus;
 
 @Entity
 public class BlogPost implements IBlogPost {
@@ -23,11 +27,17 @@ public class BlogPost implements IBlogPost {
 	private String content;
 	
 	@Column(nullable = false)
-	private String path;
+	private String imagePath;
 	
 	@OneToOne(fetch = FetchType.LAZY)
     @MapsId
 	private User editor;
+	
+	@Column(nullable = false)
+	private BlogStatus blogStatus;
+	
+	@Column(nullable = false)
+	private Date publishedToDate;
 
 	@Override
 	public void setTitle(String title) {
@@ -58,16 +68,16 @@ public class BlogPost implements IBlogPost {
 	}
 
 	@Override
-	public void setImage(String path) {
+	public void setImage(String imagePath) {
 
-		this.path = path;
+		this.imagePath = imagePath;
 		
 	}
 
 	@Override
 	public String getImage() {
 
-		return path;
+		return imagePath;
 		
 	}
 
@@ -82,6 +92,33 @@ public class BlogPost implements IBlogPost {
 	public User getEditor() {
 
 		return editor;
+		
+	}
+
+	@Override
+	public void setStatus(BlogStatus blogStatus) {
+		
+		this.blogStatus = blogStatus;
+		
+	}
+
+	@Override
+	public BlogStatus getStatus() {
+
+		return blogStatus;
+	}
+
+	@Override
+	public void setPublishedToDate(Date publishedToDate) {
+		
+		this.publishedToDate = publishedToDate;
+		
+	}
+
+	@Override
+	public Date getPublishedToDate() {
+		
+		return publishedToDate;
 		
 	}
 	

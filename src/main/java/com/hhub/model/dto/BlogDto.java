@@ -5,7 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hhub.model.User;
+import com.hhub.model.validators.CheckDateFormat;
+import com.hhub.model.validators.ContentType;
 
 public class BlogDto {
 	
@@ -18,7 +19,11 @@ public class BlogDto {
 	private String content;
 	
 	@NotNull
+	@ContentType({"image/jpg","image/jpeg","image/png","image/gif"})
 	private MultipartFile  image;
+	
+	@CheckDateFormat(pattern = "MM/dd/yyyy")
+	private String publishedToDate;
 	
 
 	public void setTitle(String title) {
@@ -50,7 +55,21 @@ public class BlogDto {
 	}
 
 	public void setImage(MultipartFile image) {
+		
 		this.image = image;
+		
+	}
+
+	public String getPublishedToDate() {
+		
+		return publishedToDate;
+		
+	}
+
+	public void setPublishedToDate(String publishedToDate) {
+		
+		this.publishedToDate = publishedToDate;
+		
 	}
 
 }

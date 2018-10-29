@@ -24,6 +24,9 @@ public class User implements IUser {
     
     @Column(nullable = false, unique = true)
     private String email;
+    
+    @Column(nullable = false)
+    private String Role;
 
 	public long getId() {
 		return id;
@@ -63,6 +66,14 @@ public class User implements IUser {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getRole() {
+		return Role;
+	}
+
+	public void setRole(String role) {
+		Role = role;
 	}
     
 }

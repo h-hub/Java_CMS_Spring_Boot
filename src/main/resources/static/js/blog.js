@@ -5,3 +5,5 @@ $(document).ready(function() {
 	  maxHeight: null             // set maximum height of editor
 	});
 });
+
+$('.datepicker').datepicker();
