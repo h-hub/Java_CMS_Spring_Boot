@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import com.hhub.model.validators.PasswordMatches;
 import com.hhub.model.validators.ValidEmail;
 
-
+@PasswordMatches
 public class UserDto {
 	
     @NotNull
@@ -23,8 +23,6 @@ public class UserDto {
     private String matchingPassword;
     
     @ValidEmail
-    @NotNull
-    @NotEmpty
     private String email;
 
 	public String getFirstName() {

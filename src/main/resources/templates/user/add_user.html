@@ -1,50 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen"
+	<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen"
 	th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+	
+	<link href="fontawesome-free-5.4.2-web/all.css" rel="stylesheet">
+	
+	<link href="css/common.css" rel="stylesheet">
 </head>
 <body>
 	<div th:replace="fragments/header :: header"></div>
 	
 	<div class="container">
-      <div class="py-5 text-center">
-        <h2>User Registration</h2>
+      <div class="py-5 text-left">
+        <h2>Add User</h2>
         <p class="lead">Input the correct information and submit.</p>
+        <div class="alert alert-success" th:each="msg : ${message}" th:text="${msg}" role="alert"></div>
       </div>
 
       <div class="row">
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">User information</h4>
-          <form class="needs-validation" novalidate action="#" th:action="@{/registerUser}" th:object="${userDto}" method="POST" enctype="utf8">
+          <form class="needs-validation" novalidate action="#" th:action="@{/process_add_user}" th:object="${userDto}" method="POST" enctype="utf8">
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="firstName">First name</label>
+                <label for="firstName">First name <i class="fas fa-asterisk mandatory-icon"></i></label>
                 <input type="text" class="form-control" id="firstName" placeholder="" value="" th:field="*{firstName}" required>
-                <small th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Valid first name is required.</small>
+                <small class="text-danger" th:each="error: ${#fields.errors('firstName')}" th:text="${error}"></small>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="lastName">Last name</label>
+                <label for="lastName">Last name <i class="fas fa-asterisk mandatory-icon"></i></label>
                 <input type="text" class="form-control" id="lastName" placeholder="" value=""  th:field="*{lastName}"  required>
-                <small th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Valid last name is required.</small>
+                <small class="text-danger" th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></small>
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="email">Email </label>
+              <label for="email">Email <i class="fas fa-asterisk mandatory-icon"></i></label>
               <input type="email" class="form-control" id="email" placeholder="you@example.com" th:field="*{email}" >
-              <small th:each="error : ${#fields.errors('email')}" th:text="${error}">Please enter a valid email.</small>
+              <small class="text-danger" th:each="error : ${#fields.errors('email')}" th:text="${error}"></small>
             </div>
             
             <div class="mb-3">
-              <label for="password">Password </label>
+              <label for="password">Password <i class="fas fa-asterisk mandatory-icon"></i></label>
               <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}" >
-              <small th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</small>
+              <small class="text-danger" th:each="error : ${#fields.errors('password')}" th:text="${error}"></small>
             </div>
             
             <div class="mb-3">
-              <label for="repeatePassword">Repeat Password </label>
+              <label for="repeatePassword">Repeat Password <i class="fas fa-asterisk mandatory-icon"></i></label>
               <input type="password" class="form-control" id="repeatePassword" placeholder="Password" th:field="*{matchingPassword}" >
+              <small class="text-danger" th:each="error : ${globalError}" th:text="${error}"></small>
             </div>
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>

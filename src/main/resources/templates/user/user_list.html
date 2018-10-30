@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="../../../resources/css/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+	
+	<link href="css/user.css" rel="stylesheet">
+	<script src="js/user.js"></script>
+	
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	
+	<div class="container">
+      <div class="py-5 text-left">
+        <h2>User List</h2>
+        <div class="alert alert-success" th:each="msg : ${message}" th:text="${msg}" role="alert"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 order-md-1">
+        
+        	<ul class="list-group mb-3">
+	            <li class="list-group-item d-flex justify-content-between lh-condensed user" th:each="user : ${userList}">
+	              <div class="username">
+	                <h6 class="my-0" th:text="${user.firstName}"></h6>
+	                <small class="text-muted" th:text="${user.lastName}"></small>
+	              </div>
+	              <div class="other-details">
+	                <h6 class="my-0" th:text="${user.email}"></h6>
+	                <small class="text-muted" th:text="${'ROLE: '+user.role}"></small>
+	              </div>
+	              <span class="text-muted"><button class="btn btn-primary btn-lg btn-block" type="button" 
+	              th:onclick="'suspendUser(\'' + ${user.id} + '\',\'' + ${user.firstName} + '\',\'' + ${user.email} + '\');'" >SUSPEND</button></span>
+	            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div th:replace="fragments/footer :: footer"></div>
+    </div>
+</body>
+</html>
+
+
+<!-- Modal -->
+<div class="modal fade" id="suspendConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6>Suspend user with:</h6>
+        <small class="firstName"></small></br>
+        <small class="email"></small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

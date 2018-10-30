@@ -1,6 +1,7 @@
 package com.hhub.controlller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -35,27 +36,35 @@ public class UserController {
         return principal;
     }
 	
-	@GetMapping("/registerUser")
+	@GetMapping("/add_user")
 	public String showRegistrationForm(Model model) {
 	    UserDto userDto = new UserDto();
 	    model.addAttribute("userDto", userDto);
-	    return "user/registration";
+	    return "user/add_user";
 	}
 	
-	@PostMapping("/registerUser")
+	@PostMapping("/process_add_user")
 	public String registerUserSubmit(@ModelAttribute @Valid UserDto userDto,BindingResult result, Model m) {
 		
 		User user = new User();
 		
 		if(result.hasErrors()) {
+			
             m.addAttribute("userDto", userDto);
-            return "user/registration";
+            
+            if(result.getGlobalError() != null) {
+				m.addAttribute("globalError", result.getGlobalError().getDefaultMessage());
+			}
+            
+            return "user/add_user";
+            
         } else {
         	user = createUser(userDto);
         }
 		
+		m.addAttribute("message", "User was created successfully, with email : "+userDto.getEmail());
 		m.addAttribute("userDto", userDto);
-		return "user/registration";
+		return "user/add_user";
 		
 	}
 
@@ -70,6 +79,14 @@ public class UserController {
 		userService.create(user);
 		return user;
 		
+	}
+	
+	@GetMapping("/user_list")
+	public String showUserList(Model model) {
+		
+		Iterable<User> userList = userService.getAll();
+	    model.addAttribute("userList", userList);
+	    return "user/user_list";
 	}
 	
 }

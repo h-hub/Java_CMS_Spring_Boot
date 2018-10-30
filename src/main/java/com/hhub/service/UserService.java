@@ -1,5 +1,7 @@
 package com.hhub.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +19,11 @@ public class UserService {
         return userRepository.save(user);
         
     }
+
+	public Iterable<User> getAll() {
+
+        return userRepository.findAll();
+
+	}
 
 }
