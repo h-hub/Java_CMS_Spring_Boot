@@ -1,6 +1,7 @@
 package com.hhub.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,18 @@ public class UserService {
 
         return userRepository.findAll();
 
+	}
+
+	public void changeStatus(Integer userId, boolean status) {
+		
+		userRepository.updateUserSetStatusById(status,userId);
+		
+	}
+
+	public Optional<User> getUserById(Integer userId) {
+
+		return userRepository.findById(userId);
+		
 	}
 
 }

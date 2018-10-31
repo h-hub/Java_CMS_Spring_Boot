@@ -26,6 +26,8 @@
       <div class="py-5 text-left">
         <h2>Create New Blog Post</h2>
         <p class="lead">Input the correct information and submit.</p>
+        <div class="alert alert-success" th:each="msg : ${message}" th:text="${msg}" role="alert"></div>
+        <small class="text-danger" th:each="error : ${globalError}" th:text="${error}"></small>
       </div>
       
       <div class="row">

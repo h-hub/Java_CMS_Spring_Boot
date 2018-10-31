@@ -11,7 +11,7 @@ public class User implements IUser {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 	
 	@Column(nullable = false)
     private String firstName;
@@ -27,12 +27,15 @@ public class User implements IUser {
     
     @Column(nullable = false)
     private String Role;
+    
+    @Column(nullable = false, name="ACTIVE")
+    private boolean status;
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -74,6 +77,14 @@ public class User implements IUser {
 
 	public void setRole(String role) {
 		Role = role;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
     
 }

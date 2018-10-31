@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hhub.model.User;
 import com.hhub.model.dto.UserDto;
@@ -60,11 +62,10 @@ public class UserController {
             
         } else {
         	user = createUser(userDto);
+        	m.addAttribute("message", "User was created successfully, with email : "+user.getEmail());
+    		m.addAttribute("userDto", userDto);
+    		return "user/add_user";
         }
-		
-		m.addAttribute("message", "User was created successfully, with email : "+userDto.getEmail());
-		m.addAttribute("userDto", userDto);
-		return "user/add_user";
 		
 	}
 
@@ -76,6 +77,7 @@ public class UserController {
 		user.setEmail(userDto.getEmail());
 		user.setPassword( new BCryptPasswordEncoder().encode(userDto.getPassword()));
 		user.setRole("ADMIN");
+		user.setStatus(true);
 		userService.create(user);
 		return user;
 		
@@ -89,4 +91,11 @@ public class UserController {
 	    return "user/user_list";
 	}
 	
+	@PostMapping("/change_user_status")
+	public String suspendUser(@RequestParam("userId") Integer userId,@RequestParam("status") Boolean status) {
+		
+		userService.changeStatus(userId,status);
+		
+		return "redirect:user_list";
+	}
 }

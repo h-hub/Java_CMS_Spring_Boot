@@ -8,17 +8,18 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.hhub.util.BlogStatus;
 
 @Entity
-public class BlogPost implements IBlogPost {
+public class BlogPost implements IBlogPost, BaseModel {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 	
 	@Column(nullable = false)
 	private String title;
@@ -30,14 +31,26 @@ public class BlogPost implements IBlogPost {
 	private String imagePath;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+	@JoinColumn(name = "id")
 	private User editor;
 	
-	@Column(nullable = false)
+	@Column(nullable = false,  name="STATUS")
 	private BlogStatus blogStatus;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, name="PUB_TO_DATE")
 	private Date publishedToDate;
+	
+	@Column(nullable = false, name="CREATED_BY")
+	private String createdBy;
+	
+	@Column(nullable = false, name="CREATE_TIME")
+	private Date createDate;
+	
+	@Column(nullable = false, name="MODIFY_BY")
+	private String modifyBy;
+	
+	@Column(nullable = false, name="MODIFY_TIME")
+	private Date modifyDate;
 
 	@Override
 	public void setTitle(String title) {
@@ -119,6 +132,60 @@ public class BlogPost implements IBlogPost {
 	public Date getPublishedToDate() {
 		
 		return publishedToDate;
+		
+	}
+
+	@Override
+	public void setCreateBy(String userEmail) {
+		
+		this.createdBy = userEmail;
+		
+	}
+
+	@Override
+	public String getCreateBy() {
+
+		return createdBy;
+	}
+
+	@Override
+	public void setCreateTime(Date createDate) {
+
+		this.createDate = createDate;
+		
+	}
+
+	@Override
+	public Date getCreateTime() {
+
+		return createDate;
+		
+	}
+
+	@Override
+	public void setModifyBy(String userEmail) {
+
+		this.modifyBy = userEmail;
+		
+	}
+
+	@Override
+	public String getModifyBy() {
+
+		return modifyBy;
+	}
+
+	@Override
+	public void setModifyTime(Date modifyDate) {
+
+		this.modifyDate = modifyDate;
+		
+	}
+
+	@Override
+	public Date getModifyTime() {
+		
+		return modifyDate;
 		
 	}
 	

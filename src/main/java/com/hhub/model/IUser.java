@@ -4,7 +4,7 @@ public interface IUser {
 	
 	public long getId();
 
-	public void setId(long id);
+	public void setId(int id);
 
 	public String getFirstName();
 	
@@ -21,4 +21,9 @@ public interface IUser {
 	public String getEmail();
 	
 	public void setEmail(String email);
+	
+	public boolean isStatus();
+	
+	public void setStatus(boolean status);
+	
 }

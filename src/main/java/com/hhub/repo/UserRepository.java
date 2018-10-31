@@ -2,12 +2,20 @@ package com.hhub.repo;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import javax.transaction.Transactional;
 
-import com.hhub.model.Book;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
 import com.hhub.model.User;
 
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 	
+	@Modifying
+	@Transactional
+    @Query("update User u set u.status = :status where u.id = :id")
+    int updateUserSetStatusById(@Param("status") boolean status, @Param("id") Integer id);
 
 }
