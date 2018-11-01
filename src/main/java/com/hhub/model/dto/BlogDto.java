@@ -10,6 +10,8 @@ import com.hhub.model.validators.ContentType;
 
 public class BlogDto {
 	
+	private int id;
+	
 	@NotNull
     @NotEmpty
 	private String title;
@@ -22,9 +24,22 @@ public class BlogDto {
 	@ContentType({"image/jpg","image/jpeg","image/png","image/gif"})
 	private MultipartFile  image;
 	
+	private String imagePath;
+	
 	@CheckDateFormat(pattern = "MM/dd/yyyy")
 	private String publishedToDate;
 	
+	private boolean preview;
+	
+	private boolean save;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public void setTitle(String title) {
 		
@@ -59,6 +74,14 @@ public class BlogDto {
 		this.image = image;
 		
 	}
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 
 	public String getPublishedToDate() {
 		
@@ -70,6 +93,22 @@ public class BlogDto {
 		
 		this.publishedToDate = publishedToDate;
 		
+	}
+
+	public boolean isPreview() {
+		return preview;
+	}
+
+	public void setPreview(boolean preview) {
+		this.preview = preview;
+	}
+
+	public boolean isSave() {
+		return save;
+	}
+
+	public void setSave(boolean save) {
+		this.save = save;
 	}
 
 }

@@ -26,8 +26,9 @@
       <div class="py-5 text-left">
         <h2>Create New Blog Post</h2>
         <p class="lead">Input the correct information and submit.</p>
+        <span th:if="${blogDto.id!=0}" class="badge badge-warning" th:text="'SAVED with ID:'+${blogDto.id}">SAVED with ID:</span>
         <div class="alert alert-success" th:each="msg : ${message}" th:text="${msg}" role="alert"></div>
-        <small class="text-danger" th:each="error : ${globalError}" th:text="${error}"></small>
+        <div class="alert alert-danger" th:each="error : ${globalError}" th:text="${error}" role="alert"></div>
       </div>
       
       <div class="row">
@@ -35,49 +36,29 @@
       <div class="col-md-4 order-md-2 mb-4">
           <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between lh-condensed">
+            	<div>
+                <h6 class="my-0">Preview blog post</h6>
+                <small class="text-muted">before publish</small>
+              </div>
               <div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Preview</button>
+                <button class="btn btn-primary btn-lg btn-block" id="preview-btn" type="button">Preview</button>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0">Second product</h6>
-                <small class="text-muted">Brief description</small>
+                <h6 class="my-0">Save blog post</h6>
+                <small class="text-muted">Don't wait till the last moment</small>
               </div>
-              <span class="text-muted">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0">Third item</h6>
-                <small class="text-muted">Brief description</small>
+              	<button class="btn btn-success btn-lg btn-block" id="save-btn"  type="submit">Save</button>
               </div>
-              <span class="text-muted">$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Promo code</h6>
-                <small>EXAMPLECODE</small>
-              </div>
-              <span class="text-success">-$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
             </li>
           </ul>
-
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Promo code">
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">Redeem</button>
-              </div>
-            </div>
-          </form>
         </div>
         <div class="col-md-8 order-md-1">
-          <form class="needs-validation" novalidate action="#" th:action="@{/add_blog_post}" th:object="${blogDto}" method="POST" enctype="multipart/form-data">
-          	
+          <form class="needs-validation" id="blog-post-form" novalidate action="#" th:action="@{/add_blog_post}" th:object="${blogDto}" method="POST" enctype="multipart/form-data">
+          		
+          	<input type="hidden" class="form-control" id="blogId" placeholder="" th:value="${id}" th:field="*{id}">	
               <div class="mb-3">
                 <label for="title">Post Title <i class="fas fa-asterisk mandatory-icon"></i></label>
                 <input type="text" class="form-control" id="title" placeholder="" value="" th:field="*{title}">
@@ -89,7 +70,7 @@
                 <small class="text-danger" role="alert"th:each="error : ${#fields.errors('content')}">Must not be empty</small>
               </div>
               <div class="mb-1">
-              	<label for="content">Date to publish <i class="fas fa-asterisk mandatory-icon"></i></label>
+              	<label for="content">Published to Date <i class="fas fa-asterisk mandatory-icon"></i></label>
 			    <input type="text" class="form-control" th:field="*{publishedToDate}" data-provide="datepicker">
 			    <div class="input-group-addon">
 			        <span class="glyphicon glyphicon-th"></span>
@@ -99,10 +80,10 @@
               <div class="mb-3">
                 <label for="image">Image ( jpg, png or gif and less than 5MB in size ) <i class="fas fa-asterisk mandatory-icon"></i></label>
                 <input type="file" class="form-control-file" id="image" placeholder="" value=""  th:field="*{image}">
-                <small class="text-danger" th:each="error : ${#fields.errors('image')}" th:text="${error}"></small>
+                <small class="text-danger font-weight-bold" th:each="error : ${#fields.errors('image')}" th:text="${error}"></small>
               </div>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Publish</button>
           </form>
         </div>
       </div>

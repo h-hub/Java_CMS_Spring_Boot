@@ -1,10 +1,13 @@
 package com.hhub.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User implements IUser {
@@ -30,6 +33,9 @@ public class User implements IUser {
     
     @Column(nullable = false, name="ACTIVE")
     private boolean status;
+    
+    @OneToMany(mappedBy="editor")
+    private Set<BlogPost> posts;
 
 	public long getId() {
 		return id;

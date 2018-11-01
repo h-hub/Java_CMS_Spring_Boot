@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="../../../resources/css/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+	
+	<link href="css/user.css" rel="stylesheet">
+	<script src="js/user.js"></script>
+	
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	
+	<div class="container">
+      <div class="py-5 text-left">
+        <h2>Blog Post List</h2>
+        <div class="alert alert-success" th:each="msg : ${message}" th:text="${msg}" role="alert"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+        
+        	<ul class="list-group mb-3">
+	            <li class="list-group-item d-flex justify-content-between lh-condensed user" th:each="blogPost : ${blogPostList}">
+	              <div class="username">
+	                <h5 class="my-0" th:text="${blogPost.title}"></h5>
+	                <small th:if="${blogPost.blogStatus.toString()=='DRAFT'}" class="badge badge-warning">SAVED</small>
+	                <small th:if="${blogPost.blogStatus.toString()=='READY'}" class="badge badge-primary">READY</small>
+	                <small th:if="${blogPost.blogStatus.toString()=='PUBLISHED'}" class="badge badge-success">PUBLISHED</small>
+	                <small th:if="${blogPost.blogStatus.toString()=='REJECT'}" class="badge badge-danger">REJECTED</small>
+	                <small th:if="${blogPost.blogStatus.toString()=='ARCHIVED'}" class="badge badge-secondary">ARCHIVED</small>
+	              </div>
+	              <div class="other-details">
+	                <h5 class="my-0" th:text="${'By :'+blogPost.editor.firstName}"></h5>
+	                <small class="text-muted" th:text="${blogPost.editor.lastName}"></small>
+	              </div>
+	              	<div class="btn-group" role="group" aria-label="Basic example">
+					  <button th:if="${blogPost.blogStatus.toString()=='READY'}" type="button" class="btn btn-primary">APPROVE</button>
+					  <button th:if="${blogPost.blogStatus.toString()=='READY'}" type="button" class="btn btn-warning">REJECT</button>
+					  <button th:if="${blogPost.blogStatus.toString()!='READY'}" type="button" class="btn btn-secondary disabled">APPROVE</button>
+					  <button th:if="${blogPost.blogStatus.toString()!='READY'}" type="button" class="btn btn-secondary disabled">REJECT</button>
+					  <a th:href="'/preview_blog?blogId='+${blogPost.id}" class="btn btn-info">VIEW</a>
+					</div>
+	            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Modal -->
+		<div class="modal fade" id="suspendConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <h6 class="body-text"></h6>
+		        <small class="firstName"></small></br>
+		        <small class="email"></small>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" id="modal-confirm-btn">Confirm</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+      
+      <div th:replace="fragments/footer :: footer"></div>
+    </div>
+</body>
+</html>
+
+

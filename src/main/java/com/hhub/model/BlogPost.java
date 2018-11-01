@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
@@ -30,8 +31,8 @@ public class BlogPost implements IBlogPost, BaseModel {
 	@Column(nullable = false)
 	private String imagePath;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
+	@ManyToOne
+    @JoinColumn(name="editor", nullable=false)
 	private User editor;
 	
 	@Column(nullable = false,  name="STATUS")
@@ -51,6 +52,32 @@ public class BlogPost implements IBlogPost, BaseModel {
 	
 	@Column(nullable = false, name="MODIFY_TIME")
 	private Date modifyDate;
+	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public BlogStatus getBlogStatus() {
+		return blogStatus;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
 
 	@Override
 	public void setTitle(String title) {
