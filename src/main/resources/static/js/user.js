@@ -12,8 +12,6 @@ function suspendUser(userId,firstName,email) {
 	this.status = false;
 	this.bodyText = "Suspend user with:";
 	$('#suspendConfirm').modal('show');
-	
-
 }
 
 function activateUser(userId,firstName,email) {

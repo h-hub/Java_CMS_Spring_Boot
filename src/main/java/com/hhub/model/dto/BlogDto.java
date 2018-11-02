@@ -7,7 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hhub.model.validators.CheckDateFormat;
 import com.hhub.model.validators.ContentType;
+import com.hhub.util.BlogStatus;
 
+@ContentType({"image/jpg","image/jpeg","image/png","image/gif"})
 public class BlogDto {
 	
 	private int id;
@@ -20,18 +22,16 @@ public class BlogDto {
     @NotEmpty
 	private String content;
 	
-	@NotNull
-	@ContentType({"image/jpg","image/jpeg","image/png","image/gif"})
+	
 	private MultipartFile  image;
 	
 	private String imagePath;
 	
-	@CheckDateFormat(pattern = "MM/dd/yyyy")
-	private String publishedToDate;
-	
 	private boolean preview;
 	
 	private boolean save;
+	
+	private BlogStatus status = BlogStatus.NEW;
 	
 	public int getId() {
 		return id;
@@ -83,18 +83,6 @@ public class BlogDto {
 		this.imagePath = imagePath;
 	}
 
-	public String getPublishedToDate() {
-		
-		return publishedToDate;
-		
-	}
-
-	public void setPublishedToDate(String publishedToDate) {
-		
-		this.publishedToDate = publishedToDate;
-		
-	}
-
 	public boolean isPreview() {
 		return preview;
 	}
@@ -109,6 +97,14 @@ public class BlogDto {
 
 	public void setSave(boolean save) {
 		this.save = save;
+	}
+
+	public BlogStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(BlogStatus status) {
+		this.status = status;
 	}
 
 }

@@ -38,7 +38,7 @@ public class BlogPost implements IBlogPost, BaseModel {
 	@Column(nullable = false,  name="STATUS")
 	private BlogStatus blogStatus;
 	
-	@Column(nullable = false, name="PUB_TO_DATE")
+	@Column(nullable = true, name="PUB_TO_DATE")
 	private Date publishedToDate;
 	
 	@Column(nullable = false, name="CREATED_BY")

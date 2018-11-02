@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -28,8 +30,9 @@ public class User implements IUser {
     @Column(nullable = false, unique = true)
     private String email;
     
-    @Column(nullable = false)
-    private String Role;
+    @ManyToOne
+    @JoinColumn(name="role_id", nullable=false)
+    private Role Role;
     
     @Column(nullable = false, name="ACTIVE")
     private boolean status;
@@ -77,11 +80,11 @@ public class User implements IUser {
 		this.email = email;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return Role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		Role = role;
 	}
 
@@ -92,5 +95,12 @@ public class User implements IUser {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-    
+
+	public Set<BlogPost> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<BlogPost> posts) {
+		this.posts = posts;
+	}    
 }

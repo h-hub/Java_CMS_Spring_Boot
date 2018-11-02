@@ -1,8 +1,5 @@
 package com.hhub.controlller;
 
-import java.security.Principal;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,89 +10,95 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hhub.model.User;
 import com.hhub.model.dto.UserDto;
+import com.hhub.service.RoleService;
 import com.hhub.service.UserService;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
+	@Autowired
+	private RoleService roleService;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 	@GetMapping("/login")
-	public String showLoginForm(Model model) {
-	    UserDto userDto = new UserDto();
-	    model.addAttribute("userDto", userDto);
-	    return "user/login";
+	public String showLoginForm(@RequestParam(value = "error", required = false) boolean error, Model model) {
+		UserDto userDto = new UserDto();
+
+		if (error) {
+			model.addAttribute("error", "Username or password error. Try again.");
+		}
+
+		model.addAttribute("userDto", userDto);
+		return "user/login";
 	}
-	
-	@GetMapping("/user/me")
-    public Principal user(Principal principal) {
-        return principal;
-    }
-	
+
 	@GetMapping("/add_user")
 	public String showRegistrationForm(Model model) {
-	    UserDto userDto = new UserDto();
-	    model.addAttribute("userDto", userDto);
-	    return "user/add_user";
+		UserDto userDto = new UserDto();
+		model.addAttribute("userDto", userDto);
+		return "user/add_user";
 	}
-	
+
 	@PostMapping("/process_add_user")
-	public String registerUserSubmit(@ModelAttribute @Valid UserDto userDto,BindingResult result, Model m) {
-		
+	public String registerUserSubmit(@ModelAttribute @Valid UserDto userDto, BindingResult result, Model m) {
+
 		User user = new User();
-		
-		if(result.hasErrors()) {
-			
-            m.addAttribute("userDto", userDto);
-            
-            if(result.getGlobalError() != null) {
+
+		if (result.hasErrors()) {
+
+			m.addAttribute("userDto", userDto);
+
+			if (result.getGlobalError() != null) {
 				m.addAttribute("globalError", result.getGlobalError().getDefaultMessage());
 			}
-            
-            return "user/add_user";
-            
-        } else {
-        	user = createUser(userDto);
-        	m.addAttribute("message", "User was created successfully, with email : "+user.getEmail());
-    		m.addAttribute("userDto", userDto);
-    		return "user/add_user";
-        }
-		
+
+			return "user/add_user";
+
+		} else {
+			user = createUser(userDto);
+			m.addAttribute("message", "User was created successfully, with email : " + user.getEmail());
+			m.addAttribute("userDto", userDto);
+			return "user/add_user";
+		}
+
 	}
 
 	private User createUser(UserDto userDto) {
-		
+
 		User user = new User();
 		user.setFirstName(userDto.getFirstName());
 		user.setLastName(userDto.getLastName());
 		user.setEmail(userDto.getEmail());
-		user.setPassword( new BCryptPasswordEncoder().encode(userDto.getPassword()));
-		user.setRole("ADMIN");
+		user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+		user.setRole(roleService.findByRole("EDITOR"));
 		user.setStatus(true);
 		userService.create(user);
 		return user;
-		
+
 	}
-	
+
 	@GetMapping("/user_list")
 	public String showUserList(Model model) {
-		
+
 		Iterable<User> userList = userService.getAll();
-	    model.addAttribute("userList", userList);
-	    return "user/user_list";
+		model.addAttribute("userList", userList);
+		return "user/user_list";
 	}
-	
+
 	@PostMapping("/change_user_status")
-	public String suspendUser(@RequestParam("userId") Integer userId,@RequestParam("status") Boolean status) {
-		
-		userService.changeStatus(userId,status);
-		
+	public String suspendUser(@RequestParam("userId") Integer userId, @RequestParam("status") Boolean status) {
+
+		userService.changeStatus(userId, status);
+
 		return "redirect:user_list";
 	}
 }

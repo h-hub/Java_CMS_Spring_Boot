@@ -25,7 +25,7 @@
 	<div class="container">
       <div class="py-5 text-left">
         <h2 th:text="${blogDto.title}"></h2>
-        <!-- img th:src="${blogDto.imagePath}" class="img-fluid" alt="Responsive image"-->
+        
       </div>
       
       <div class="row">
@@ -43,7 +43,8 @@
             </li>
           </ul>
         </div>
-        <div class="col-md-8 order-md-1 border rounded">
+        <div class="col-md-8 order-md-1 border rounded px-4 py-4">
+        	<img th:src="${'image/'+blogDto.imagePath}" class="img-fluid border border-dark" alt="Responsive image">
         	<div th:remove="tag" th:utext="${blogDto.content}"></div>
         </div>
       </div>

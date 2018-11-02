@@ -26,32 +26,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-            .anyRequest()
-            .permitAll()
-            .and().csrf().disable();
+//        http.authorizeRequests()
+//            .anyRequest()
+//            .permitAll()
+//            .and().csrf().disable();
     	
     	
     	
-//    	http.
-//        authorizeRequests()
-//        .antMatchers("/").permitAll()
-//        .antMatchers("/login").permitAll()
-//        .antMatchers("/registration").permitAll()
-//        .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-//        .authenticated().and().csrf().disable().formLogin()
-//        .loginPage("/login").failureUrl("/login?error=true")
-//        .defaultSuccessUrl("/add_blog_post")
-//        .usernameParameter("email")
-//        .passwordParameter("password")
-//        .and().logout()
-//        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//        .logoutSuccessUrl("/").and().exceptionHandling()
-//        .accessDeniedPage("/access-denied");
+    	http.
+        authorizeRequests()
+        .antMatchers("/add_blog_post/**").hasAuthority("EDITOR")
+        .antMatchers("/login").permitAll()
+        .antMatchers("/registration").permitAll()
+        .antMatchers("/add_user/**","/user_list/**")
+        .hasAuthority("ADMIN").anyRequest()
+        .authenticated().and().csrf().disable().formLogin()
+        .loginPage("/login").failureUrl("/login?error=true")
+        .defaultSuccessUrl("/")
+        .usernameParameter("email")
+        .passwordParameter("password")
+        .and().logout()
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessUrl("/login").and().exceptionHandling()
+        .accessDeniedPage("/access-denied");
    
     }
     
@@ -59,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 		    web
 		    .ignoring()
-		    .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/webjars/**");
+		    .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/images/**", "/webjars/**");
 		    
 		    
     }
@@ -70,11 +74,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .usersByUsernameQuery(usersQuery)
 	        .authoritiesByUsernameQuery(rolesQuery)
 	        .dataSource(dataSource)
-	        .passwordEncoder(new BCryptPasswordEncoder());
-    }
-     
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){ 
-        return new BCryptPasswordEncoder(); 
+	        .passwordEncoder(bCryptPasswordEncoder);
     }
 }

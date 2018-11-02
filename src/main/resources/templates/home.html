@@ -1,20 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
 	media="screen"
 	th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+	<link href="css/fontawesome-free-5.4.2-web/all.css" rel="stylesheet">
+	
+	<link href="css/cover.css" rel="stylesheet">
 </head>
 <body>
 
-	<div th:replace="fragments/header :: header"></div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm">One of three columns</div>
-			<div class="col-sm">One of three columns</div>
-			<div class="col-sm">One of three columns</div>
-		</div>
-	</div>
+	    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">My Simple CMS</h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link active" href="/logout">Sign out</a>
+          </nav>
+        </div>
+      </header>
+
+      <main role="main" class="inner cover">
+        <h1 class="cover-heading">Build with Java</h1>
+        <p class="lead">
+        	Java 10 / Spring 5 / Spring boot / Bootstrap / JPA and Hibernate<br>
+        	Build with scalability and Simplicity in Mind
+        </p>
+        
+        <p>Hi <span sec:authentication="name"></span></p>
+        <p class="lead" sec:authorize="hasAuthority('EDITOR')">
+          <a href="/add_blog_post" class="btn btn-lg btn-secondary"> Dashboard <i class="fas fa-arrow-circle-right"></i></a>
+        </p>
+        <p class="lead" sec:authorize="hasAuthority('ADMIN')">
+          <a href="/add_user" class="btn btn-lg btn-secondary"> Dashboard <i class="fas fa-arrow-circle-right"></i></a>
+        </p>
+        
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>By Harsha Jayamanna<a href="https://harshajayamanna.com/"> Portfolio</a></p>
+        </div>
+      </footer>
+    </div>
 </body>
 </html>

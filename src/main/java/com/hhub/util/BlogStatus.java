@@ -5,5 +5,6 @@ public enum BlogStatus {
 	READY,
 	REJECT,
 	PUBLISHED,
-	ARCHIVED
+	ARCHIVED, 
+	NEW
 }

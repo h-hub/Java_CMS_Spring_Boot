@@ -5,7 +5,10 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class ContentTypeMultipartFileValidator implements ConstraintValidator<ContentType, MultipartFile> {
+import com.hhub.model.dto.BlogDto;
+import com.hhub.model.dto.UserDto;
+
+public class ContentTypeMultipartFileValidator implements ConstraintValidator<ContentType, Object> {
 
 	private String[] acceptedContentTypes;
 
@@ -15,7 +18,15 @@ public class ContentTypeMultipartFileValidator implements ConstraintValidator<Co
 	}
 
 	@Override
-	public boolean isValid(MultipartFile value, ConstraintValidatorContext context) {
+	public boolean isValid(Object obj, ConstraintValidatorContext context) {
+		
+		BlogDto blogDto = (BlogDto) obj;
+		MultipartFile value= blogDto.getImage();
+		
+		if( blogDto.getImagePath() != null  && !blogDto.getImagePath().isEmpty()) {
+			return true;
+		}
+		
 		if (value == null || value.isEmpty())
 			return false;
 		
