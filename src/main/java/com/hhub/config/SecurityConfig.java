@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.
         authorizeRequests()
         .antMatchers("/add_blog_post/**").hasAuthority("EDITOR")
+        .antMatchers("/edit_blog/**").hasAuthority("EDITOR")
         .antMatchers("/login").permitAll()
         .antMatchers("/registration").permitAll()
         .antMatchers("/add_user/**","/user_list/**")
