@@ -7,37 +7,32 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.apache.tomcat.util.http.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hhub.model.BlogPost;
-import com.hhub.model.Role;
 import com.hhub.model.User;
 import com.hhub.model.dto.BlogDto;
-import com.hhub.model.dto.UserDto;
-import com.hhub.model.validators.CheckDateFormat;
-import com.hhub.repo.BlogPostRepository;
 import com.hhub.service.BlogPostService;
 import com.hhub.service.UserService;
 import com.hhub.util.BlogStatus;
@@ -78,7 +73,13 @@ public class BlogController {
 		}
 
 		if (result.hasErrors()) {
-			m.addAttribute("globalError", "Please check the form for errors");
+			
+			if (result.getGlobalError() != null) {
+				m.addAttribute("globalError", result.getGlobalError().getDefaultMessage());
+			}
+			
+			m.addAttribute("error", "Please check the form for errors");
+
 			m.addAttribute("blogDto", blogDto);
 			return "blog/add_blog_post";
 
@@ -175,10 +176,16 @@ public class BlogController {
         User user = userService.findUserByEmail(auth.getName());
         blogPost.setEditor(user);
         
-		blogPost.setCreateBy("email");
-		blogPost.setCreateTime(new Date());
-		blogPost.setModifyBy("email");
-		blogPost.setModifyTime(new Date());
+        if (optionalBlogPost.isPresent()) {
+    		blogPost.setModifyBy(auth.getName());
+    		blogPost.setModifyTime(new Date());
+		} else {
+			blogPost.setCreateBy(auth.getName());
+			blogPost.setCreateTime(new Date());
+			blogPost.setModifyBy(auth.getName());
+			blogPost.setModifyTime(new Date());
+		}
+		
 
 		blogPostService.create(blogPost);
 
@@ -253,12 +260,16 @@ public class BlogController {
         Iterable<BlogPost> blogPostList;
         
         if(user.getRole().getName().equals("EDITOR")) {
-        	blogPostList = user.getPosts();
+        	Set<BlogPost> posts = user.getPosts();
+        	List<BlogPost> postsSorted = posts.stream().collect(Collectors.toList());
+        	Collections.sort(postsSorted, (o1, o2) -> o2.getId()-o1.getId());
+        	model.addAttribute("blogPostList", postsSorted);
         } else {
         	blogPostList = blogPostService.getAll();
+        	model.addAttribute("blogPostList", blogPostList);
         }
 		
-		model.addAttribute("blogPostList", blogPostList);
+		
 		return "blog/blog_post_list";
 	}
 

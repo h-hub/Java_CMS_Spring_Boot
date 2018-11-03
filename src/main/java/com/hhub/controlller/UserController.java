@@ -34,7 +34,7 @@ public class UserController {
 		UserDto userDto = new UserDto();
 
 		if (error) {
-			model.addAttribute("error", "Username or password error. Try again.");
+			model.addAttribute("error", "Username or password error. Try again. Please contact admin if you have been suspended.");
 		}
 
 		model.addAttribute("userDto", userDto);

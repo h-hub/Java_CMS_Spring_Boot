@@ -32,15 +32,27 @@
       
       <div class="col-md-4 order-md-2 mb-4">
           <ul class="list-group mb-3">
+          
             <li class="list-group-item d-flex justify-content-between lh-condensed" sec:authorize="hasAuthority('EDITOR')">
             	<div>
-                <h6 class="my-0">Back to Editing</h6>
+                <h6 class="my-0">Start Editing</h6>
                 <small class="text-muted"></small>
               </div>
               <div>
                 <a class="btn btn-primary btn-lg btn-info" th:href="'/edit_blog?blogId='+${blogDto.id}">EDIT</a>
               </div>
             </li>
+            
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+            	<div>
+                <h6 class="my-0">See All</h6>
+                <small class="text-muted">posts</small>
+              </div>
+              <div>
+                <a class="btn btn-primary btn-lg btn-success" href="/blog_post_list">VIEW</a>
+              </div>
+            </li>
+            
           </ul>
         </div>
         <div class="col-md-8 order-md-1 border rounded px-4 py-4">

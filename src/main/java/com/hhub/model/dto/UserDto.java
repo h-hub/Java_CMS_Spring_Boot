@@ -2,9 +2,11 @@ package com.hhub.model.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.hhub.model.validators.PasswordMatches;
 import com.hhub.model.validators.ValidEmail;
+import com.hhub.model.validators.EmailExist;
 
 @PasswordMatches
 public class UserDto {
@@ -19,10 +21,12 @@ public class UserDto {
      
     @NotNull
     @NotEmpty
+    @Size(min = 6, max = 10, message = "Password must be between 6 and 10 characters")
     private String password;
     private String matchingPassword;
     
     @ValidEmail
+    @EmailExist
     private String email;
 
 	public String getFirstName() {

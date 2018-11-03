@@ -12,22 +12,25 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active" sec:authorize="hasAuthority('ADMIN')">
+          <li th:classappend="${#httpServletRequest.getRequestURI() == '/add_user' ? 'active':''}" class="nav-item" sec:authorize="hasAuthority('ADMIN')">
             <a class="nav-link" href="/add_user">USER+<span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item active" sec:authorize="hasAuthority('ADMIN')">
+          <li th:classappend="${#httpServletRequest.getRequestURI() == '/user_list' ? 'active':''}" class="nav-item" sec:authorize="hasAuthority('ADMIN')">
             <a class="nav-link" href="/user_list">USER LIST<span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="/add_blog_post" sec:authorize="hasAuthority('EDITOR')">POST+</a>
+          <li th:classappend="${#httpServletRequest.getRequestURI() == '/add_blog_post' ? 'active':''}"  class="nav-item" sec:authorize="hasAuthority('EDITOR')">
+            <a class="nav-link" href="/add_blog_post">POST+</a>
           </li>
-          <li class="nav-item active">
+          <li th:classappend="${#httpServletRequest.getRequestURI() == '/blog_post_list' ? 'active':''}" class="nav-item">
             <a class="nav-link" href="/blog_post_list">POST LIST</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link btn btn-info" href="/logout">Sign out</a>
           </li>
         </ul>
+        <div class="form-inline my-2 my-lg-0 text-light">
+			<div>Welcome Back&nbsp</div><span sec:authentication="name"></span>
+        </div>
       </div>
     </nav>
 </body>

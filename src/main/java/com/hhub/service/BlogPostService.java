@@ -31,7 +31,7 @@ public class BlogPostService {
 
 	public Iterable<BlogPost> getAll() {
 
-		return blogPostRepository.findAll();
+		return blogPostRepository.findByOrderByIdDesc();
 		
 	}
 

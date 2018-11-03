@@ -26,31 +26,31 @@
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name <i class="fas fa-asterisk mandatory-icon"></i></label>
                 <input type="text" class="form-control" id="firstName" placeholder="" value="" th:field="*{firstName}" required>
-                <small class="text-danger" th:each="error: ${#fields.errors('firstName')}" th:text="${error}"></small>
+                <small class="text-danger clearfix" th:each="error: ${#fields.errors('firstName')}" th:text="${error}"></small>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last name <i class="fas fa-asterisk mandatory-icon"></i></label>
                 <input type="text" class="form-control" id="lastName" placeholder="" value=""  th:field="*{lastName}"  required>
-                <small class="text-danger" th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></small>
+                <small class="text-danger clearfix" th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></small>
               </div>
             </div>
 
             <div class="mb-3">
               <label for="email">Email <i class="fas fa-asterisk mandatory-icon"></i></label>
               <input type="email" class="form-control" id="email" placeholder="you@example.com" th:field="*{email}" >
-              <small class="text-danger" th:each="error : ${#fields.errors('email')}" th:text="${error}"></small>
+              <small class="text-danger clearfix" th:each="error : ${#fields.errors('email')}" th:text="${error}"></small>
             </div>
             
             <div class="mb-3">
-              <label for="password">Password <i class="fas fa-asterisk mandatory-icon"></i></label>
+              <label for="password">Password (Between 6 and 10 characters) <i class="fas fa-asterisk mandatory-icon"></i></label>
               <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}" >
-              <small class="text-danger" th:each="error : ${#fields.errors('password')}" th:text="${error}"></small>
+              <small class="text-danger clearfix" th:each="error : ${#fields.errors('password')}" th:text="${error}"></small>
             </div>
             
             <div class="mb-3">
               <label for="repeatePassword">Repeat Password <i class="fas fa-asterisk mandatory-icon"></i></label>
               <input type="password" class="form-control" id="repeatePassword" placeholder="Password" th:field="*{matchingPassword}" >
-              <small class="text-danger" th:each="error : ${globalError}" th:text="${error}"></small>
+              <small class="text-danger clearfix" th:each="error : ${globalError}" th:text="${error}"></small>
             </div>
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit">Submit</button>

@@ -29,4 +29,6 @@ public interface BlogPostRepository extends CrudRepository<BlogPost, Integer> {
     @Query("update BlogPost p set p.blogStatus = :status where p.publishedToDate < :today")
     int archiveBlogPost(@Param("status") BlogStatus status, @Param("today") Date today);
 
+	Iterable<BlogPost> findByOrderByIdDesc();
+
 }

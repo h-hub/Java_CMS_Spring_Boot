@@ -31,7 +31,7 @@
         <span th:if="${blogDto.status.toString()=='READY'}" class="badge badge-primary">READY to be published</span>
         <span th:if="${blogDto.status.toString()=='PUBLISHED'}" class="badge badge-primary">PUBLISHED</span>
         <div class="alert alert-success" th:each="msg : ${message}" th:text="${msg}" role="alert"></div>
-        <div class="alert alert-danger" th:each="error : ${globalError}" th:text="${error}" role="alert"></div>
+        <div class="alert alert-danger" th:each="error : ${error}" th:text="${error}" role="alert"></div>
       </div>
       
       <div class="row">
@@ -72,6 +72,7 @@
           		
           	<input type="hidden" class="form-control" id="blogId" placeholder="" th:value="${id}" th:field="*{id}">
           	<input type="hidden" class="form-control" id="status" placeholder="" th:value="${status}" th:field="*{status}">	
+          	<div class="alert alert-danger" th:each="error : ${globalError}" th:text="${error}" role="alert"></div>
               <div class="mb-3">
                 <label for="title">Post Title <i class="fas fa-asterisk mandatory-icon"></i></label>
                 <input th:disabled="${blogDto.status.toString()=='READY' or blogDto.status.toString()=='PUBLISHED'}" type="text" class="form-control" id="title" placeholder="" value="" th:field="*{title}">
