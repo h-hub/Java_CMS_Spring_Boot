@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 import com.hhub.util.BlogStatus;
 
 @Entity
-public class BlogPost implements IBlogPost, BaseModel {
+public class BlogPost implements BaseModel {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,143 +79,121 @@ public class BlogPost implements IBlogPost, BaseModel {
 		return modifyDate;
 	}
 
-	@Override
 	public void setTitle(String title) {
 		
 		this.title = title;
 		
 	}
 
-	@Override
 	public String getTitle() {
 
 		return title;
 		
 	}
 
-	@Override
 	public void setContent(String content) {
 
 		this.content = content;
 		
 	}
 
-	@Override
 	public String getContent() {
 
 		return content;
 		
 	}
 
-	@Override
 	public void setImage(String imagePath) {
 
 		this.imagePath = imagePath;
 		
 	}
 
-	@Override
 	public String getImage() {
 
 		return imagePath;
 		
 	}
 
-	@Override
 	public void setEditor(User editor) {
 		
 		this.editor = editor;
 		
 	}
 
-	@Override
 	public User getEditor() {
 
 		return editor;
 		
 	}
 
-	@Override
 	public void setStatus(BlogStatus blogStatus) {
 		
 		this.blogStatus = blogStatus;
 		
 	}
 
-	@Override
 	public BlogStatus getStatus() {
 
 		return blogStatus;
 	}
 
-	@Override
 	public void setPublishedToDate(Date publishedToDate) {
 		
 		this.publishedToDate = publishedToDate;
 		
 	}
 
-	@Override
 	public Date getPublishedToDate() {
 		
 		return publishedToDate;
 		
 	}
 
-	@Override
 	public void setCreateBy(String userEmail) {
 		
 		this.createdBy = userEmail;
 		
 	}
 
-	@Override
 	public String getCreateBy() {
 
 		return createdBy;
 	}
 
-	@Override
 	public void setCreateTime(Date createDate) {
 
 		this.createDate = createDate;
 		
 	}
 
-	@Override
 	public Date getCreateTime() {
 
 		return createDate;
 		
 	}
 
-	@Override
 	public void setModifyBy(String userEmail) {
 
 		this.modifyBy = userEmail;
 		
 	}
 
-	@Override
 	public String getModifyBy() {
 
 		return modifyBy;
 	}
 
-	@Override
 	public void setModifyTime(Date modifyDate) {
 
 		this.modifyDate = modifyDate;
 		
 	}
 
-	@Override
 	public Date getModifyTime() {
 		
 		return modifyDate;
 		
 	}
 	
-	
-
 }

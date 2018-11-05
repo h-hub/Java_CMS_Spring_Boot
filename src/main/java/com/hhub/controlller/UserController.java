@@ -3,7 +3,6 @@ package com.hhub.controlller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hhub.model.User;
 import com.hhub.model.dto.UserDto;
-import com.hhub.service.RoleService;
 import com.hhub.service.UserService;
 
 @Controller
@@ -22,12 +20,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private RoleService roleService;
-
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/login")
 	public String showLoginForm(@RequestParam(value = "error", required = false) boolean error, Model model) {
@@ -64,25 +56,11 @@ public class UserController {
 			return "user/add_user";
 
 		} else {
-			user = createUser(userDto);
+			user = userService.createUser(userDto);
 			m.addAttribute("message", "User was created successfully, with email : " + user.getEmail());
 			m.addAttribute("userDto", userDto);
 			return "user/add_user";
 		}
-
-	}
-
-	private User createUser(UserDto userDto) {
-
-		User user = new User();
-		user.setFirstName(userDto.getFirstName());
-		user.setLastName(userDto.getLastName());
-		user.setEmail(userDto.getEmail());
-		user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
-		user.setRole(roleService.findByRole("EDITOR"));
-		user.setStatus(true);
-		userService.create(user);
-		return user;
 
 	}
 
