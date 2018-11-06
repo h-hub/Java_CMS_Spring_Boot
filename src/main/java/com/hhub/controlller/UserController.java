@@ -1,18 +1,28 @@
 package com.hhub.controlller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import com.hhub.model.Role;
 import com.hhub.model.User;
 import com.hhub.model.dto.UserDto;
+import com.hhub.service.RolesService;
 import com.hhub.service.UserService;
 
 @Controller
@@ -20,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private RolesService rolesService;
 
 	@GetMapping("/login")
 	public String showLoginForm(@RequestParam(value = "error", required = false) boolean error, Model model) {
@@ -66,9 +79,17 @@ public class UserController {
 
 	@GetMapping("/user_list")
 	public String showUserList(Model model) {
-
-		Iterable<User> userList = userService.getAll();
-		model.addAttribute("userList", userList);
+		
+		List<User> userListSorted = new ArrayList<User>();
+		Role role = rolesService.findByRole("EDITOR");
+		
+		
+		Set<User> userList = role.getUsers();
+		userListSorted = userList.stream().collect(Collectors.toList());
+    	Collections.sort(userListSorted, (o1, o2) -> o2.getId() - o1.getId());
+    	
+    	model.addAttribute("userList", userListSorted);
+    	
 		return "user/user_list";
 	}
 
@@ -79,4 +100,6 @@ public class UserController {
 
 		return "redirect:user_list";
 	}
+	
+	
 }

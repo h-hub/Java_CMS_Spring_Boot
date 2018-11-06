@@ -19,7 +19,7 @@ public class Role {
 	@Column(nullable = false)
     private String role;
 	
-	@OneToMany(mappedBy="id")
+	@OneToMany(mappedBy="role")
     private Set<User> users;
 
 	public int getId() {
@@ -36,6 +36,10 @@ public class Role {
 
 	public void setName(String role) {
 		this.role = role;
+	}
+
+	public Set<User> getUsers() {
+		return users;
 	}
 	
 }

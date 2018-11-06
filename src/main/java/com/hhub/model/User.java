@@ -32,7 +32,7 @@ public class User {
     
     @ManyToOne
     @JoinColumn(name="role_id", nullable=false)
-    private Role Role;
+    private Role role;
     
     @Column(nullable = false, name="ACTIVE")
     private boolean status;
@@ -40,7 +40,7 @@ public class User {
     @OneToMany(mappedBy="editor")
     private Set<BlogPost> posts;
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -81,11 +81,11 @@ public class User {
 	}
 
 	public Role getRole() {
-		return Role;
+		return role;
 	}
 
 	public void setRole(Role role) {
-		Role = role;
+		this.role = role;
 	}
 
 	public boolean isStatus() {
