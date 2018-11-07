@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hhub.model.validators.CheckDateFormat;
 import com.hhub.model.validators.ContentType;
 import com.hhub.util.BlogStatus;
 

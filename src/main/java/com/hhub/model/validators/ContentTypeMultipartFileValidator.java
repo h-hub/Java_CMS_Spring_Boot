@@ -6,7 +6,6 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hhub.model.dto.BlogDto;
-import com.hhub.model.dto.UserDto;
 
 public class ContentTypeMultipartFileValidator implements ConstraintValidator<ContentType, Object> {
 

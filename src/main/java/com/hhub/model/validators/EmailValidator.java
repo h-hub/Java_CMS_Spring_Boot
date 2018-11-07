@@ -6,11 +6,6 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.hhub.model.User;
-import com.hhub.service.UserService;
-
 public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 
 	private Pattern pattern;
