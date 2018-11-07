@@ -2,36 +2,44 @@ package com.hhub.exception;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.HttpStatus;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    //StandardServletMultipartResolver
     @ExceptionHandler(MultipartException.class)
     public String handleError1(MultipartException e, RedirectAttributes redirectAttributes) {
 
-        redirectAttributes.addFlashAttribute("message", e.getCause().getMessage());
-        return "redirect:/blog/add_blog_post";
+        redirectAttributes.addFlashAttribute("error", "Please upload jpg, png or gif which are less than 5MB in size");
+        return "redirect:/add_blog_post";
 
     }
 
-    //CommonsMultipartResolver
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public String handleError2(MaxUploadSizeExceededException e, RedirectAttributes redirectAttributes) {
+    @ExceptionHandler(PostNotFoundException.class)
+    public String handleError2(PostNotFoundException e, RedirectAttributes redirectAttributes) {
 
-        redirectAttributes.addFlashAttribute("message", e.getCause().getMessage());
-        return "redirect:add_blog_post_error";
+        redirectAttributes.addFlashAttribute("error", "Blog post not found in our Website");
+        return "redirect:/global_error";
 
     }
     
     @ExceptionHandler(RuntimeException.class)
     public String handleError2(RuntimeException e, RedirectAttributes redirectAttributes) {
 
-        redirectAttributes.addFlashAttribute("message", e.getCause().getMessage());
-        return "redirect:add_blog_post_error";
+        return "redirect:/global_error";
+
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public String handleError2(Exception e, RedirectAttributes redirectAttributes) {
+
+        return "redirect:/global_error";
 
     }
 

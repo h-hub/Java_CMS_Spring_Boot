@@ -11,4 +11,11 @@ public class HomeController {
     public String homePage(Model model) {
         return "home";
     }
+    
+    @GetMapping("/global_error")
+	public String showBlogPostFormError() {
+
+		return "global_error";
+
+	}
 }

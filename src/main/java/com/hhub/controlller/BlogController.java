@@ -1,6 +1,7 @@
 package com.hhub.controlller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.ParseException;
@@ -8,11 +9,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +26,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.hhub.exception.PostNotFoundException;
 import com.hhub.model.BlogPost;
 import com.hhub.model.dto.BlogDto;
 import com.hhub.service.BlogPostService;
@@ -107,25 +115,24 @@ public class BlogController {
 		createBlogImagesDirIfNeeded();
 
 		File serverFile = new File(BLOG_IMAGES_DIR_ABSOLUTE_PATH + imageName);
+		File file = ResourceUtils.getFile("classpath:static/image-not-found.png");
 
-		return Files.readAllBytes(serverFile.toPath());
+		try {
+			return Files.readAllBytes(serverFile.toPath());
+		} catch (IOException e) {
+			return Files.readAllBytes(file.toPath());
+		}
+		
 	}
-	
+
 	private void createBlogImagesDirIfNeeded() {
 		if (!BLOG_IMAGES_DIR.exists()) {
 			BLOG_IMAGES_DIR.mkdirs();
 		}
 	}
 
-	@GetMapping("/add_blog_post_error")
-	public String showBlogPostFormError() {
-
-		return "blog/add_blog_post_error";
-
-	}
-
 	@GetMapping("/preview_blog")
-	public String previewBlog(@RequestParam("blogId") Integer blogId, Model m) throws Exception {
+	public String previewBlog(@RequestParam("blogId") Integer blogId, Model m) throws PostNotFoundException {
 
 		Optional<BlogPost> optionalBlogPost = blogPostService.findById(blogId);
 
@@ -137,7 +144,7 @@ public class BlogController {
 			m.addAttribute("blogDto", blogDto);
 
 		} else {
-			throw new Exception("blog Post not found");
+			throw new PostNotFoundException("Blog Post not found");
 		}
 
 		return "blog/view_blog_post";

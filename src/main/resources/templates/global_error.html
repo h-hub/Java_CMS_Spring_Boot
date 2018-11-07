@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CMS created with Java">
+    <meta name="author" content="harsha.kj89@gmail.com">
+
+    <title>Error Page</title>
+	
+	<script src="js/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/popper.js/1.11.0/umd/popper.min.js"></script>
+	<script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+	<script src="js/datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="js/summernote/0.8.9/summernote-lite.min.js"></script>
+	<script src="js/blog.js"></script>
+	
+	<link rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+	<link href="css/datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+	<link href="css/fontawesome-free-5.4.2-web/all.css" rel="stylesheet">
+	<link href="css/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
+	<link href="css/common.css" rel="stylesheet">
+	
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	
+	<div class="container">
+      <div class="py-5 text-left">
+        <h2>Something went wrong !!</h2>
+        <p class="lead">It has been recorded and are working on it.</p>
+      </div>
+      
+      <div class="row">
+      
+        <div class="col-md-8 order-md-1">
+          	<div class="alert alert-danger" role="alert">
+			  <h4 class="alert-heading">Sorry !</h4>
+			  <div th:each="error : ${error}" th:text="${error}"></div>
+			  <p th:if="${error==null}">Our Engineers are working to resolve this issue as soon as possible.</p>
+			  <p>Please check other features in the mean time</p>
+			  <hr>
+			  <a class="btn btn-info btn-lg btn-block" href="/">Go to Home</a>
+			</div>
+        </div>
+      </div>
+      
+      <div th:replace="fragments/footer :: footer"></div>
+    </div>
+</body>
+</html>
