@@ -29,8 +29,7 @@ public class ContentTypeMultipartFileValidator implements ConstraintValidator<Co
 		if (value == null || value.isEmpty())
 			return false;
 		
-		if ( ContentTypeMultipartFileValidator.acceptContentType(value.getContentType(), acceptedContentTypes) 
-				& ContentTypeMultipartFileValidator.acceptFileSize(value)) {
+		if ( ContentTypeMultipartFileValidator.acceptContentType(value.getContentType(), acceptedContentTypes) ) {
 			
 			return true;
 			
@@ -51,15 +50,5 @@ public class ContentTypeMultipartFileValidator implements ConstraintValidator<Co
 		}
 
 		return false;
-	}
-	
-	private static boolean acceptFileSize(MultipartFile file) {
-		
-		if(file.getSize() < (5e+6)) {
-			return true;
-		}
-		
-		return false;
-		
 	}
 }
