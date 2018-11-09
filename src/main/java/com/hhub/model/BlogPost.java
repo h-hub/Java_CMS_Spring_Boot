@@ -49,7 +49,24 @@ public class BlogPost implements BaseModel {
 	@Column(nullable = false, name="MODIFY_TIME")
 	private Date modifyDate;
 	
-	
+	public BlogPost() {
+		super();
+	}
+
+	public BlogPost(String title, String content, String imagePath, User editor, BlogStatus blogStatus,
+			Date publishedToDate, String createdBy, Date createDate, String modifyBy, Date modifyDate) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.imagePath = imagePath;
+		this.editor = editor;
+		this.blogStatus = blogStatus;
+		this.publishedToDate = publishedToDate;
+		this.createdBy = createdBy;
+		this.createDate = createDate;
+		this.modifyBy = modifyBy;
+		this.modifyDate = modifyDate;
+	}
 
 	public int getId() {
 		return id;

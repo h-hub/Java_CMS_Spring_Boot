@@ -14,11 +14,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MultipartException.class)
     public String handleError1(MultipartException e, RedirectAttributes redirectAttributes) {
-    	logger.trace("A TRACE Message");
-        logger.debug("A DEBUG Message");
-        logger.info("An INFO Message");
-        logger.warn("A WARN Message");
-        logger.error("An ERROR Message");
+        logger.error("Upload file size exceeded");
         redirectAttributes.addFlashAttribute("error", "Please upload jpg, png or gif which are less than 5MB in size");
         return "redirect:/add_blog_post";
 
@@ -26,7 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PostNotFoundException.class)
     public String handleError2(PostNotFoundException e, RedirectAttributes redirectAttributes) {
-
+    	logger.error("Post not found");
         redirectAttributes.addFlashAttribute("error", "Blog post not found in our Website");
         return "redirect:/global_error";
 
@@ -34,14 +30,14 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(RuntimeException.class)
     public String handleError2(RuntimeException e, RedirectAttributes redirectAttributes) {
-
+    	logger.error("RuntimeException occurred: "+e.getMessage());
         return "redirect:/global_error";
 
     }
     
     @ExceptionHandler(Exception.class)
     public String handleError2(Exception e, RedirectAttributes redirectAttributes) {
-
+    	logger.error("Exception occurred: "+e.getMessage());
         return "redirect:/global_error";
 
     }
