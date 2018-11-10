@@ -1,10 +1,12 @@
 package com.hhub.repo.test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 import java.util.Date;
+import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +34,67 @@ public class BlogRepositoryIntegrationTest {
 	@Autowired
 	private BlogPostRepository blogPostRepository;
 	
-	@Test
-	public void whenUpdateBlogPostSetStatusById_thenReturnInt() {
-	    // given
+	private User user;
+	
+	@Before
+	public void createUser() {
+		
 		Role role = new Role("TEST_ROLE");
 		entityManager.persist(role);
 		
-	    User alex = new User("alex", "perera", "test_password", "test@gmail.com", role, true);
-	    entityManager.persist(alex);
+	    user = new User("alex", "perera", "test_password", "test@gmail.com", role, true);
+	    entityManager.persist(user);
 	    entityManager.flush();
 	    
-	    BlogPost blogPost = new BlogPost("title", "content", "image/path", alex, BlogStatus.READY, new Date(), "createdBy", new Date(), "modifyBy", new Date() );
-	 
+	}
+	
+	@Test
+	public void whenUpdateBlogPostSetStatusById_thenReturnInt() {
+		
+	    // given
+	    BlogPost blogPost = new BlogPost("title", "content", "image/path", user, BlogStatus.READY, new Date(), "createdBy", new Date(), "modifyBy", new Date() );
+	    entityManager.persist(blogPost);
+	    entityManager.flush();
+	    
 	    // when
 	    int founBlogPost = blogPostRepository.updateBlogPostSetStatusById(BlogStatus.READY, blogPost.getId());
 	 
 	    // then
-	    assertThat(founBlogPost, is(blogPost.getId()));
+	    assertEquals(founBlogPost, blogPost.getId());
+	}
+	
+	@Test
+	public void whenUpdateBlogPostSetStatusDateById_thenReturnInt() {
+		
+	    // given	    
+	    BlogPost blogPost = new BlogPost("title", "content", "image/path", user, BlogStatus.READY, null, "createdBy", new Date(), "modifyBy", new Date() );
+	    entityManager.persist(blogPost);
+	    entityManager.flush();
+	    
+	    // when
+	    int founBlogPost = blogPostRepository.updateBlogPostSetStatusDateById(BlogStatus.READY, blogPost.getId(), new Date());
+	 
+	    // then
+	    assertEquals(founBlogPost, blogPost.getId());
+	}
+	
+	@Test
+	public void whenArchiveBlogPost_thenReturnInt() {
+		
+		Date yesterday = new Date(System.currentTimeMillis() - 1000L * 60L * 60L * 24L);
+        
+	    // given	    
+	    BlogPost blogPost = new BlogPost("title", "content", "image/path", user, BlogStatus.READY, yesterday, "createdBy", new Date(), "modifyBy", new Date() );
+	    entityManager.persist(blogPost);
+	    entityManager.flush();
+	    
+	    // when
+	    blogPostRepository.archiveBlogPost(BlogStatus.ARCHIVED, new Date());
+	    Optional<BlogPost> foundBlogPost =  blogPostRepository.findById(blogPost.getId());
+	 
+	    // then
+	   // assertEquals(foundBlogPost.get(), notNullValue());
+	    assertEquals(foundBlogPost.get(), blogPost);
 	}
 
 }

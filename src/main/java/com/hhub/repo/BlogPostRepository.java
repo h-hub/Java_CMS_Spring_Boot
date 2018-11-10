@@ -22,12 +22,12 @@ public interface BlogPostRepository extends CrudRepository<BlogPost, Integer> {
 	@Modifying
 	@Transactional
     @Query("update BlogPost p set p.blogStatus = :status, p.publishedToDate = :pubToDate  where p.id = :blogPostId")
-    int updateBlogPostSetStatusById(@Param("status") BlogStatus status, @Param("blogPostId") Integer blogPostId, @Param("pubToDate") Date pubToDate);
+    int updateBlogPostSetStatusDateById(@Param("status") BlogStatus status, @Param("blogPostId") Integer blogPostId, @Param("pubToDate") Date pubToDate);
 	
 	@Modifying
 	@Transactional
     @Query("update BlogPost p set p.blogStatus = :status where p.publishedToDate < :today")
-    int archiveBlogPost(@Param("status") BlogStatus status, @Param("today") Date today);
+    void archiveBlogPost(@Param("status") BlogStatus status, @Param("today") Date today);
 
 	Iterable<BlogPost> findByOrderByIdDesc();
 

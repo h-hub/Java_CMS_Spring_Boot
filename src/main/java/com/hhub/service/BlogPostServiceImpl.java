@@ -144,7 +144,7 @@ public class BlogPostServiceImpl implements BlogPostService {
 		if (date.isEmpty()) {
 			blogPostRepository.updateBlogPostSetStatusById(status, blogPostId);
 		} else {
-			blogPostRepository.updateBlogPostSetStatusById(status, blogPostId, formatter.parse(date));
+			blogPostRepository.updateBlogPostSetStatusDateById(status, blogPostId, formatter.parse(date));
 			
 		}
 		
