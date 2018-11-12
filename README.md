@@ -1,22 +1,30 @@
-# spring boot cms
+# JAVA CMS
 https://harshajayamanna.com/2018/11/08/spring-boot-mvc-file-upload-with-exception-handling/
 
-Spring boot crud cms MVC application
+Requirments
 
-Maven install and execute the jar.
+  - Java 10
+  - Maven > 3.5.3
+  - Mysql
 
-Install DB dumps and update the credentials in the application.properties file
+# Steps
 
-Uses MVC, thymeleaf, spring boot, jpa/hibernate, bootstrap, mysql
+  - Import project as a maven project to eclipse
+  - Import the mysql dump in the git repo to mysql database
+  - Edit the \src\main\resources\application.properties file to match your mysql properties. (Edit below fields accordingly)
+    - spring.datasource.url=jdbc:mysql://localhost:3306/cms_crud
+    - spring.datasource.username=root
+    - spring.datasource.password=admin1234
+    - spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+    - spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect
+    - spring.jpa.show-sql = true
+   - Run maven install
+   - Then you can run the application as a java application (Run as -> Java application) or
+   - Go to the target folder and execute the jar file (java -jar crudApp-0.0.1-SNAPSHOT.jar)
 
-visit http://localhost:8089
 
-There is no registration page for the admin.Use belowe creadetials which comes with the DB dump
-
-
-username : harsha.kj89@gmail.com
-
-
-password: 123123123
-
-NOTE: project in progress
+# How to test:
+  - Go to this url  http://localhost:8089 (Tested only with chrome)
+  - Use the below credentiona which i have included in the DB dump
+    - username :  harsha.kj89@gmail.com
+    - Password : 123123123
