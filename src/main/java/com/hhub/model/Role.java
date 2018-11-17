@@ -22,6 +22,10 @@ public class Role {
 	@OneToMany(mappedBy="role")
     private Set<User> users;
 
+	public Role() {
+		super();
+	}
+
 	public Role(String role) {
 		super();
 		this.role = role;
