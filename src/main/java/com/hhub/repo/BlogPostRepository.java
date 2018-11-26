@@ -1,6 +1,7 @@
 package com.hhub.repo;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -13,22 +14,23 @@ import com.hhub.model.BlogPost;
 import com.hhub.util.BlogStatus;
 
 public interface BlogPostRepository extends CrudRepository<BlogPost, Integer> {
-	
-	@Modifying
-	@Transactional
+
+    @Modifying
+    @Transactional
     @Query("update BlogPost p set p.blogStatus = :status where p.id = :blogPostId")
     int updateBlogPostSetStatusById(@Param("status") BlogStatus status, @Param("blogPostId") Integer blogPostId);
-	
-	@Modifying
-	@Transactional
+
+    @Modifying
+    @Transactional
     @Query("update BlogPost p set p.blogStatus = :status, p.publishedToDate = :pubToDate  where p.id = :blogPostId")
-    int updateBlogPostSetStatusDateById(@Param("status") BlogStatus status, @Param("blogPostId") Integer blogPostId, @Param("pubToDate") Date pubToDate);
-	
-	@Modifying
-	@Transactional
+    int updateBlogPostSetStatusDateById(@Param("status") BlogStatus status, @Param("blogPostId") Integer blogPostId,
+	    @Param("pubToDate") Date pubToDate);
+
+    @Modifying
+    @Transactional
     @Query("update BlogPost p set p.blogStatus = :status where p.publishedToDate < :today")
     void archiveBlogPost(@Param("status") BlogStatus status, @Param("today") Date today);
 
-	Iterable<BlogPost> findByOrderByIdDesc();
+    List<BlogPost> findByOrderByIdDesc();
 
 }

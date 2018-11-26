@@ -35,29 +35,29 @@
 	            <li class="list-group-item d-flex justify-content-between lh-condensed post" th:each="blogPost : ${blogPostList}">
 	              <div class="title col-md-5">
 	                <h5 class="my-0" th:text="${blogPost.title}"></h5>
-	                <small th:if="${blogPost.blogStatus.toString()=='DRAFT'}" class="badge badge-warning">SAVED</small>
-	                <small th:if="${blogPost.blogStatus.toString()=='READY'}" class="badge badge-primary">READY</small>
-	                <small th:if="${blogPost.blogStatus.toString()=='PUBLISHED'}" class="badge badge-success">PUBLISHED</small>
-	                <small th:if="${blogPost.blogStatus.toString()=='REJECT'}" class="badge badge-danger">REJECTED</small>
-	                <small th:if="${blogPost.blogStatus.toString()=='ARCHIVED'}" class="badge badge-secondary">ARCHIVED</small>
+	                <small th:if="${blogPost.status.toString()=='DRAFT'}" class="badge badge-warning">SAVED</small>
+	                <small th:if="${blogPost.status.toString()=='READY'}" class="badge badge-primary">READY</small>
+	                <small th:if="${blogPost.status.toString()=='PUBLISHED'}" class="badge badge-success">PUBLISHED</small>
+	                <small th:if="${blogPost.status.toString()=='REJECT'}" class="badge badge-danger">REJECTED</small>
+	                <small th:if="${blogPost.status.toString()=='ARCHIVED'}" class="badge badge-secondary">ARCHIVED</small>
 	              </div>
 	              <div class="author col-md-2">
-	                <h5 class="my-0" th:text="${'By :'+blogPost.editor.firstName}"></h5>
-	                <small class="text-muted" th:text="${blogPost.editor.lastName}"></small>
+	                <h5 class="my-0" th:text="${'By :'+blogPost.editorFirstName}"></h5>
+	                <small class="text-muted" th:text="${blogPost.editorFirstName}"></small>
 	              </div>
 	              
 	              <div sec:authorize="hasAuthority('ADMIN')" class="author col-md-2">
-				    <input type="text" class="form-control datepicker" th:name="${'pubToDateOf_'+blogPost.id}" placeholder="Publish to date*" th:if="${blogPost.blogStatus.toString()=='READY'}">
+				    <input type="text" class="form-control datepicker" th:name="${'pubToDateOf_'+blogPost.id}" placeholder="Publish to date*" th:if="${blogPost.status.toString()=='READY'}">
 				    <div class="input-group-addon">
 				        <span class="glyphicon glyphicon-th"></span>
 				    </div>
 				    <!-- small class="text-danger" th:each="error : ${#fields.errors('publishedToDate')}" th:text="${error}"></small-->
 	              </div>
 	              	<div class="btn-group col-md-3" role="group" aria-label="Basic example" >
-					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.blogStatus.toString()=='READY'}" th:onclick="'approvePost(\'' + ${blogPost.id} + '\',\'' + ${blogPost.title} + '\',\'' + ${blogPost.editor.firstName +' '+blogPost.editor.lastName} + '\');'" type="button" class="btn btn-primary">APPROVE</button>
-					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.blogStatus.toString()=='READY'}" th:onclick="'rejectPost(\'' + ${blogPost.id} + '\',\'' + ${blogPost.title} + '\',\'' + ${blogPost.editor.firstName +' '+blogPost.editor.lastName} + '\');'" type="button" class="btn btn-warning">REJECT</button>
-					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.blogStatus.toString()!='READY'}" type="button" class="btn btn-secondary disabled">APPROVE</button>
-					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.blogStatus.toString()!='READY'}" type="button" class="btn btn-secondary disabled">REJECT</button>
+					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.status.toString()=='READY'}" th:onclick="'approvePost(\'' + ${blogPost.id} + '\',\'' + ${blogPost.title} + '\',\'' + ${blogPost.editorFirstName +' '+blogPost.editorFirstName} + '\');'" type="button" class="btn btn-primary">APPROVE</button>
+					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.status.toString()=='READY'}" th:onclick="'rejectPost(\'' + ${blogPost.id} + '\',\'' + ${blogPost.title} + '\',\'' + ${blogPost.editorFirstName +' '+blogPost.editorFirstName} + '\');'" type="button" class="btn btn-warning">REJECT</button>
+					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.status.toString()!='READY'}" type="button" class="btn btn-secondary disabled">APPROVE</button>
+					  <button sec:authorize="hasAuthority('ADMIN')" th:if="${blogPost.status.toString()!='READY'}" type="button" class="btn btn-secondary disabled">REJECT</button>
 					  <a th:href="'/preview_blog?blogId='+${blogPost.id}" class="btn btn-info">VIEW</a>
 					</div>
 	            </li>

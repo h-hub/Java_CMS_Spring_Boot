@@ -13,16 +13,20 @@ public interface BlogPostService {
 
 	BlogPost create(BlogPost blogPost);
 
-	Optional<BlogPost> findById(Integer blogId);
+	BlogPost findById(Integer blogId) throws Exception;
 
-	List<BlogPost> getAll();
+	List<BlogDto> getAll();
 
 	void archiveBlogPost();
 	
 	String createImage(String name, MultipartFile file, String path) throws Exception;
 	
-	BlogPost createBlogPost(BlogDto blogDto, String imagePath) throws ParseException;
+	BlogDto createBlogPost(BlogDto blogDto, String imagePath) throws ParseException, Exception;
 	
 	void changeStatus(Integer blogPostId, Boolean approve, String date) throws ParseException;
+	
+	boolean exists(Integer blogPostId);
+
+	BlogDto findByIdtoShow(Integer blogId) throws Exception;
 	
 }

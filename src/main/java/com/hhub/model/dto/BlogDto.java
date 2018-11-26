@@ -8,102 +8,121 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hhub.model.validators.ContentType;
 import com.hhub.util.BlogStatus;
 
-@ContentType({"image/jpg","image/jpeg","image/png","image/gif"})
+@ContentType({ "image/jpg", "image/jpeg", "image/png", "image/gif" })
 public class BlogDto {
-	
-	private int id;
-	
-	@NotNull
+
+    private int id;
+
+    @NotNull
     @NotEmpty
-	private String title;
-	
-	@NotNull
+    private String title;
+
+    @NotNull
     @NotEmpty
-	private String content;
-	
-	
-	private MultipartFile  image;
-	
-	private String imagePath;
-	
-	private boolean preview;
-	
-	private boolean save;
-	
-	private BlogStatus status = BlogStatus.NEW;
-	
-	public int getId() {
-		return id;
-	}
+    private String content;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private MultipartFile image;
 
-	public void setTitle(String title) {
-		
-		this.title = title;
-		
-	}
+    private String imagePath;
 
-	public String getTitle() {
+    private boolean preview;
 
-		return title;
-		
-	}
+    private boolean save;
 
-	public void setContent(String content) {
+    private BlogStatus status = BlogStatus.NEW;
+    
+    private String editorFirstName;
+    
+    private String editorLastName;
 
-		this.content = content;
-		
-	}
+    public int getId() {
+	return id;
+    }
 
-	public String getContent() {
+    public void setId(int id) {
+	this.id = id;
+    }
 
-		return content;
-		
-	}
+    public void setTitle(String title) {
 
-	public MultipartFile getImage() {
-		return image;
-	}
+	this.title = title;
 
-	public void setImage(MultipartFile image) {
-		
-		this.image = image;
-		
-	}
-	
-	public String getImagePath() {
-		return imagePath;
-	}
+    }
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
+    public String getTitle() {
 
-	public boolean isPreview() {
-		return preview;
-	}
+	return title;
 
-	public void setPreview(boolean preview) {
-		this.preview = preview;
-	}
+    }
 
-	public boolean isSave() {
-		return save;
-	}
+    public void setContent(String content) {
 
-	public void setSave(boolean save) {
-		this.save = save;
-	}
+	this.content = content;
 
-	public BlogStatus getStatus() {
-		return status;
-	}
+    }
 
-	public void setStatus(BlogStatus status) {
-		this.status = status;
-	}
+    public String getContent() {
+
+	return content;
+
+    }
+
+    public MultipartFile getImage() {
+	return image;
+    }
+
+    public void setImage(MultipartFile image) {
+
+	this.image = image;
+
+    }
+
+    public String getImagePath() {
+	return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+	this.imagePath = imagePath;
+    }
+
+    public boolean isPreview() {
+	return preview;
+    }
+
+    public void setPreview(boolean preview) {
+	this.preview = preview;
+    }
+
+    public boolean isSave() {
+	return save;
+    }
+
+    public void setSave(boolean save) {
+	this.save = save;
+    }
+
+    public BlogStatus getStatus() {
+	return status;
+    }
+
+    public void setStatus(BlogStatus status) {
+	this.status = status;
+    }
+
+    public String getEditorFirstName() {
+        return editorFirstName;
+    }
+
+    public void setEditorFirstName(String editorFirstName) {
+        this.editorFirstName = editorFirstName;
+    }
+
+    public String getEditorLastName() {
+        return editorLastName;
+    }
+
+    public void setEditorLastName(String editorLastName) {
+        this.editorLastName = editorLastName;
+    }
 
 }
