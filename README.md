@@ -7,6 +7,12 @@ Requirments
   - Maven > 3.5.3
   - Mysql
 
+Sample UIs of the application
+
+![UI](https://harshajayamanna.com/wp-content/uploads/2018/11/harshajayamanna_spring_boot_mvc2.png)
+![UI](https://harshajayamanna.com/wp-content/uploads/2018/11/harshajayamanna_spring_boot_mvc.png)
+
+
 # Steps
 
   - Import project as a maven project to eclipse
