@@ -48,7 +48,7 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public BlogPost findById(Integer blogId) throws Exception {
 
-	var blogPost =  blogPostRepository.findById(blogId);
+	Optional<BlogPost> blogPost =  blogPostRepository.findById(blogId);
 	
 	return blogPost.orElseThrow(() -> new Exception("blog Post not found"));
 

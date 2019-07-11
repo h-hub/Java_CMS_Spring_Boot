@@ -50,7 +50,7 @@ public class BlogController {
     @GetMapping("/add_blog_post")
     public String showBlogPostForm(Model model) throws Exception {
 
-	var blogDto = new BlogDto();
+	BlogDto blogDto = new BlogDto();
 	model.addAttribute("blogDto", blogDto);
 	return "blog/add_blog_post";
 
@@ -130,7 +130,7 @@ public class BlogController {
     @GetMapping("/preview_blog")
     public String previewBlog(@RequestParam("blogId") Integer blogId, Model m) throws Exception {
 
-	var blogDto = blogPostService.findByIdtoShow(blogId);
+	BlogDto blogDto = blogPostService.findByIdtoShow(blogId);
 	m.addAttribute("blogDto", blogDto);
 
 	return "blog/view_blog_post";
@@ -139,7 +139,7 @@ public class BlogController {
     @GetMapping("/edit_blog")
     public String editBlog(@RequestParam("blogId") Integer blogId, Model m) throws Exception {
 
-	var blogDto = blogPostService.findByIdtoShow(blogId);
+    BlogDto blogDto = blogPostService.findByIdtoShow(blogId);
 	m.addAttribute("blogDto", blogDto);
 
 	return "blog/add_blog_post";
@@ -148,7 +148,7 @@ public class BlogController {
     @GetMapping("/blog_post_list")
     public String showPostList(Model model) {
 
-	var blogPostList = blogPostService.getAll();
+	List<BlogDto> blogPostList = blogPostService.getAll();
 	model.addAttribute("blogPostList", blogPostList);
 
 	return "blog/blog_post_list";
